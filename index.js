@@ -1,16 +1,19 @@
-function longestPalindrome(s) {
-  const map = new Map();
-  let hasOdd = false;
-  let result = 0;
-  for (const char of s) {
-    map.set(char, (map.get(char) || 0) + 1);
-  }
-  for (const count of map.values()) {
-    if (count % 2 === 0) result += count;
-    else {
-      result += count - 1;
-      hasOdd = true;
+function trap(height) {
+  let left = 0;
+  let right = height.length - 1;
+  let leftMax = 0;
+  let rightMax = 0;
+  let waterTrapped = 0;
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) leftMax = height[left];
+      else waterTrapped += leftMax - height[left];
+      left++;
+    } else {
+      if (height[right] >= rightMax) rightMax = height[right];
+      else waterTrapped += rightMax - height[right];
+      right--;
     }
   }
-  return hasOdd ? result + 1 : result;
+  return waterTrapped;
 }
